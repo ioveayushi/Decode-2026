@@ -11,7 +11,7 @@ class SpindexerTest: LinearOpMode() {
     override fun runOpMode() {
         robot = Robot(this)
 
-        robot.spindexer.home()
+//        robot.spindexer.home()
 
         waitForStart()
 
@@ -23,6 +23,18 @@ class SpindexerTest: LinearOpMode() {
             }
 
             robot.updateGamepadStates()
+
+            robot.dashboardTelemetry.addData("servo power", robot.spindexer.servo.servo.power)
+            robot.dashboardTelemetry.addData("servo target", robot.spindexer.servo.targetPosition)
+            robot.dashboardTelemetry.addData("servo current", robot.spindexer.servo.position)
+            robot.dashboardTelemetry.addData("servo analog", robot.spindexer.servo.analog.voltage)
+            robot.dashboardTelemetry.update()
+
+            telemetry.addData("servo power", robot.spindexer.servo.servo.power)
+            telemetry.addData("servo target", robot.spindexer.servo.targetPosition)
+            telemetry.addData("servo current", robot.spindexer.servo.position)
+            telemetry.addData("servo analog", robot.spindexer.servo.analog.voltage)
+            telemetry.update()
         }
     }
 }

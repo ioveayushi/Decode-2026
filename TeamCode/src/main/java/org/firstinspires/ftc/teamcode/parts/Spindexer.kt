@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.parts
 
 import android.graphics.Color
+import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.hardware.ColorSensor
 import com.qualcomm.robotcore.hardware.DistanceSensor
 import com.qualcomm.robotcore.hardware.TouchSensor
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.teamcode.PIDController
+import org.firstinspires.ftc.teamcode.PIDValues
 
 enum class LightColor(val index: Int) {
     RED(0),
@@ -13,8 +15,12 @@ enum class LightColor(val index: Int) {
     GREEN(2)
 }
 
+@Config
 class Spindexer(val servo: AxonServo, val distanceSensor: DistanceSensor, val colorSensor: ColorSensor, val light: Light, val touchSensor: TouchSensor): Updatable {
-    private val pid: PIDController = PIDController(1.0, 0.0, 0.0)
+    var kp = 0.4
+    var ki = 0.5
+    var kd = 0.1
+    private val pid: PIDValues = PIDValues(kp, ki, kd, 10.0)
 
     private val prismColorsUs = intArrayOf(1050, 1200, 1350, 1500, 1650, 1800, 1940)
 
@@ -27,8 +33,12 @@ class Spindexer(val servo: AxonServo, val distanceSensor: DistanceSensor, val co
 
     private var homePosition: Double = 0.0
 
-    override fun update() {
+    init {
+        servo.pid.setValues(PIDValues(kp, ki, kd))
+    }
 
+    override fun update() {
+        servo.pid.setValues(pid)
     }
 
     fun checkBall() {

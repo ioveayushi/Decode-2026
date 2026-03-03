@@ -40,10 +40,9 @@ class AxonServo(val servo: CRServo, val analog: AnalogInput, val pid: PIDControl
 
         if (abs(error) > tolerance) {
             val power = pid.calculate(targetPosition, position)
-            servo.power = clamp(power, -1.0, 1.0)
+            servo.power = -clamp(power, -1.0, 1.0)
         } else {
             servo.power = 0.0
-            pid.reset()
         }
     }
 }

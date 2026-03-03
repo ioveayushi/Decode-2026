@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode
 
 import com.qualcomm.robotcore.util.ElapsedTime
 import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.sign
 
-class PIDController(var kp: Double, var ki: Double, var kd: Double, var maxIntegralSum: Double = 0.25) {
+class PIDController(var kp: Double, var ki: Double, var kd: Double, var maxIntegralSum: Double = 0.25, var ks: Double = 0.06) {
     private var lastError = 0.0
     private var integralSum = 0.0
     private var timer = ElapsedTime()
@@ -22,7 +24,9 @@ class PIDController(var kp: Double, var ki: Double, var kd: Double, var maxInteg
         lastError = error
         lastTime = currentTime
 
-        return (kp * error) + (ki * integralSum) + (kd * derivative)
+        val output = (kp * error) + (ki * integralSum) + (kd * derivative)
+
+        return sign(output) * max(abs(output), ks)
     }
 
     fun setValues(kp: Double, ki: Double, kd: Double, maxIntegralSum: Double = this.maxIntegralSum) {
@@ -47,4 +51,4 @@ class PIDController(var kp: Double, var ki: Double, var kd: Double, var maxInteg
     }
 }
 
-class PIDValues(val kp: Double, val ki: Double, val kd: Double, val maxIntegralSum: Double) {}
+class PIDValues(val kp: Double, val ki: Double, val kd: Double, val maxIntegralSum: Double = 0.25) {}
