@@ -3,11 +3,14 @@ package org.firstinspires.ftc.teamcode.parts
 import androidx.core.math.MathUtils.clamp
 import com.qualcomm.robotcore.hardware.AnalogInput
 import com.qualcomm.robotcore.hardware.CRServo
+import org.firstinspires.ftc.teamcode.PIDController
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sign
 
-class AxonServo(val servo: CRServo, val analog: AnalogInput): Updatable {
+class AxonServo(val servo: CRServo, val analog: AnalogInput, val pid: PIDController = PIDController(1.0, 0.0, 0.0)): Updatable {
+    var tolerance = 0.01
+
     // Holds the current position of the servo
     var position: Double
         get() {
@@ -28,10 +31,14 @@ class AxonServo(val servo: CRServo, val analog: AnalogInput): Updatable {
 
     // Set the power so it moves towards the target position
     override fun update() {
-        if (abs(position - targetPosition) >= 0.05) {
-            servo.power = sign(targetPosition - position) * (targetPosition - position).pow(2)
+        val error = targetPosition - position
+
+        if (abs(error) > tolerance) {
+            val power = pid.calculate(targetPosition, position)
+            servo.power = clamp(power, -1.0, 1.0)
         } else {
             servo.power = 0.0
+            pid.reset()
         }
     }
 }
