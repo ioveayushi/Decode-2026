@@ -114,7 +114,7 @@ class Robot(val opMode: OpMode) {
         turret = Turret(limelight, turretMotor, flywheelMotor)
         spindexer = Spindexer(spindexerServo, spindexerDistance, spindexerColor, spindexerLight, spindexerMagnet)
 
-        updateables = arrayOf(spindexer)
+        updateables = arrayOf(spindexer, turret)
 
         gamepadState1 = GamepadState()
         lastGamepadState1 = GamepadState()
