@@ -96,4 +96,52 @@ class GamepadState {
 
         ps = gamepad.ps
     }
+
+    fun updateGamepadState(gamepad: GamepadState) {
+        left_stick_x = gamepad.left_stick_x
+        left_stick_y = gamepad.left_stick_y
+        right_stick_x = gamepad.right_stick_x
+        right_stick_y = gamepad.right_stick_y
+
+        dpad_up = gamepad.dpad_up
+        dpad_down = gamepad.dpad_down
+        dpad_left = gamepad.dpad_left
+        dpad_right = gamepad.dpad_right
+
+        a = gamepad.a
+        b = gamepad.b
+        x = gamepad.x
+        y = gamepad.y
+
+        guide = gamepad.guide
+        start = gamepad.start
+        back = gamepad.back
+
+        left_bumper = gamepad.left_bumper
+        right_bumper = gamepad.right_bumper
+
+        left_stick_button = gamepad.left_stick_button
+        right_stick_button = gamepad.right_stick_button
+
+        left_trigger = gamepad.left_trigger
+        right_trigger = gamepad.right_trigger
+
+        circle = gamepad.circle
+        cross = gamepad.cross
+        triangle = gamepad.triangle
+        square = gamepad.square
+
+        share = gamepad.share
+        options = gamepad.options
+
+        touchpad = gamepad.touchpad
+        touchpad_finger_1 = gamepad.touchpad_finger_1
+        touchpad_finger_2 = gamepad.touchpad_finger_2
+        touchpad_finger_1_x = gamepad.touchpad_finger_1_x
+        touchpad_finger_1_y = gamepad.touchpad_finger_1_y
+        touchpad_finger_2_x = gamepad.touchpad_finger_2_x
+        touchpad_finger_2_y = gamepad.touchpad_finger_2_y
+
+        ps = gamepad.ps
+    }
 }
